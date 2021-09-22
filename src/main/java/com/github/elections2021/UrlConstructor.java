@@ -11,7 +11,6 @@ public class UrlConstructor {
     public static final int TYPE_FEDERAL = 242; // type
     public static final int PRVER = 0; // prver = 0, некий неважный параметр?
 
-
     public static String uikUrlOneMandate(long tvd) {
         return uikUrl(tvd, TYPE_ONE_MANDATE);
     }
@@ -30,5 +29,15 @@ public class UrlConstructor {
             PRVER,
             type
         );
+    }
+
+    public static void main(String[] args) {
+        final long UIK_8418_TVD = 4784017309091L;
+
+        final String oneMandateUrl = uikUrlOneMandate(UIK_8418_TVD);
+        final String federalUrl = uikUrlFederal(UIK_8418_TVD);
+
+        System.out.println("one mandate url: " + oneMandateUrl);
+        System.out.println("federal url: " + federalUrl);
     }
 }
