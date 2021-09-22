@@ -37,7 +37,7 @@ public class UrlConstructor {
         final String oneMandateUrl = uikUrlOneMandate(UIK_8418_TVD);
         final String federalUrl = uikUrlFederal(UIK_8418_TVD);
 
-        System.out.println("one mandate url: " + oneMandateUrl);
-        System.out.println("federal url: " + federalUrl);
+        System.out.println("one mandate url: " + oneMandateUrl); // todo: replace with logger
+        System.out.println("federal url: " + federalUrl); // todo: replace with logger
     }
 }
