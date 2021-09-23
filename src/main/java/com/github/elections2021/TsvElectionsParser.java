@@ -9,8 +9,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Log4j2
 public class TsvElectionsParser {
@@ -25,9 +30,31 @@ public class TsvElectionsParser {
 
     public static void main(String[] args) {
         String rootDir = "C:\\Users\\popovdmi\\Downloads\\Telegram Desktop\\Districts\\";
-        String fileName = "Алтайский край – Барнаульский.tsv";
-        String filePath = rootDir + fileName;
+//        String fileName = "Алтайский край – Барнаульский.tsv";
+//        String filePath = rootDir + fileName;
 
+        final List<RuDataTsvUik> uiksFromAllFiles = new ArrayList<>();
+
+        final List<String> fileNames = iterateDirectory(rootDir);
+
+        for (int i = 0; i < fileNames.size(); i++) {
+            final String fileName = fileNames.get(i);
+
+            log.info("=================================================");
+            log.info("Handling file {} (file {} / {})", fileName, i + 1, fileNames.size());
+
+            final String filePath = rootDir + fileName;
+
+            final List<RuDataTsvUik> uiks = handleFile(fileName, filePath);
+
+            uiksFromAllFiles.addAll(uiks);
+        }
+
+        log.info("=================================================");
+        log.info("Directory {} handled. Total files: {}. Total uiks: {}", rootDir, fileNames.size(), uiksFromAllFiles.size());
+    }
+
+    private static List<RuDataTsvUik> handleFile(String fileName, String filePath) {
         final List<String[]> rows = getRows(filePath);
 
         final String[] headerRow = rows.get(0);
@@ -65,7 +92,29 @@ public class TsvElectionsParser {
         //        log.info("Rows: \n{}", rows);
 
         log.info("Uiks size: \n{}", uiks.size());
-        log.info("UIKs: \n{}", uiks);
+//        log.info("UIKs: \n{}", uiks);
+
+        return uiks;
+    }
+
+    private static List<String> iterateDirectory(String rootDir) {
+        // https://www.baeldung.com/java-list-directory-files
+        // no nested dirs
+
+        try (Stream<Path> stream = Files.list(Paths.get(rootDir))) {
+            final List<String> fileNames = stream
+                .filter(file -> !Files.isDirectory(file))
+                .map(Path::getFileName)
+                .map(Path::toString)
+                .collect(Collectors.toList());
+
+            log.info("File names count:\n{}", fileNames.size());
+            log.info("File names:\n{}", fileNames);
+
+            return fileNames;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static List<String[]> getRows(String filePath) {
