@@ -4,10 +4,7 @@ import com.univocity.parsers.tsv.TsvParser;
 import com.univocity.parsers.tsv.TsvParserSettings;
 import lombok.extern.log4j.Log4j2;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -52,6 +49,10 @@ public class TsvElectionsParser {
 
         log.info("=================================================");
         log.info("Directory {} handled. Total files: {}. Total uiks: {}", rootDir, fileNames.size(), uiksFromAllFiles.size());
+
+        final String outputFilePath = "c:/java/elections-2021/uiks.json";
+        JacksonUtils.serialize(new File(outputFilePath), uiksFromAllFiles);
+        log.info("Serialized UIKs to file {}.", outputFilePath);
     }
 
     private static List<RuDataTsvUik> handleFile(String fileName, String filePath) {
