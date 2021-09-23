@@ -1,10 +1,14 @@
 package com.github.elections2021;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class RuDataTsvUik {
     private String fileName; // metadata
 
@@ -17,4 +21,5 @@ public class RuDataTsvUik {
     // todo: other columns in between
 
     private String url;
+    private Long tikTvd;
 }

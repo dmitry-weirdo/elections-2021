@@ -27,6 +27,21 @@ public class JacksonUtils {
         }
     }
 
+    public static <T> List<T> parseList(File file, Class<T> clazz) {
+        Class<?> arrayClass = getArrayClass(clazz);
+
+        try {
+            ObjectMapper mapper = createObjectMapper();
+
+            final T[] array = (T[]) mapper.readValue(file, arrayClass);
+            return Arrays.asList(array);
+        }
+        catch (IOException e) {
+            String errorMessage = String.format("Error on parsing file %s to class %s", file.getPath(), arrayClass.getName());
+            throw handleError(e, errorMessage);
+        }
+    }
+
     public static <T> T parse(String string, Class<T> clazz) {
         try {
             ObjectMapper mapper = createObjectMapper();
@@ -40,9 +55,7 @@ public class JacksonUtils {
 
     public static <T> List<T> parseList(String string, Class<T> clazz) {
         try {
-            Class<?> arrayClass = Class.forName(
-                "[L" + clazz.getCanonicalName() + ";"
-            );
+            Class<?> arrayClass = getArrayClass(clazz);
 
             ObjectMapper mapper = createObjectMapper();
             final T[] array = (T[]) mapper.readValue(string, arrayClass);
@@ -51,6 +64,16 @@ public class JacksonUtils {
         catch (Exception e) {
             String errorMessage = String.format("Error on parsing string %s to class %s", string, clazz.getName());
             throw handleError(e, errorMessage);
+        }
+    }
+
+    private static <T> Class<?> getArrayClass(Class<T> clazz) {
+        try {
+            return Class.forName(
+                "[L" + clazz.getCanonicalName() + ";"
+            );
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

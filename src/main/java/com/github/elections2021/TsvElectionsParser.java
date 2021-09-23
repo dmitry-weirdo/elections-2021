@@ -1,5 +1,7 @@
 package com.github.elections2021;
 
+import com.github.elections2021.api.UrlParser;
+import com.github.elections2021.util.FileUtils;
 import com.univocity.parsers.tsv.TsvParser;
 import com.univocity.parsers.tsv.TsvParserSettings;
 import lombok.extern.log4j.Log4j2;
@@ -30,6 +32,8 @@ public class TsvElectionsParser {
 //        String fileName = "Алтайский край – Барнаульский.tsv";
 //        String filePath = rootDir + fileName;
 
+        File outputFile = FileUtils.getResourceFile("json/uiks-with-tikTvd.json");
+
         final List<RuDataTsvUik> uiksFromAllFiles = new ArrayList<>();
 
         final List<String> fileNames = iterateDirectory(rootDir);
@@ -50,9 +54,8 @@ public class TsvElectionsParser {
         log.info("=================================================");
         log.info("Directory {} handled. Total files: {}. Total uiks: {}", rootDir, fileNames.size(), uiksFromAllFiles.size());
 
-        final String outputFilePath = "c:/java/elections-2021/uiks.json";
-        JacksonUtils.serialize(new File(outputFilePath), uiksFromAllFiles);
-        log.info("Serialized UIKs to file {}.", outputFilePath);
+        JacksonUtils.serialize(outputFile, uiksFromAllFiles);
+        log.info("Serialized UIKs to file {}.", outputFile.getPath());
     }
 
     private static List<RuDataTsvUik> handleFile(String fileName, String filePath) {
@@ -74,6 +77,9 @@ public class TsvElectionsParser {
             // todo: we may also parse other fields, not important for now
 
             final String url = row[urlPosition];
+            final long tikTvd = UrlParser.getTvd(url);
+
+            log.info("Parsed tik tvd = {} from url {}", tikTvd, url);
 
             final RuDataTsvUik uikData = RuDataTsvUik
                 .builder()
@@ -84,6 +90,7 @@ public class TsvElectionsParser {
                 .tik(tik)
                 .uik(uik)
                 .url(url)
+                .tikTvd(tikTvd)
                 .build();
 
             uiks.add(uikData);
