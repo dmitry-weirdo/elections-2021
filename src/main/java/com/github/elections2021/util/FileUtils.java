@@ -1,6 +1,6 @@
 package com.github.elections2021.util;
 
-import com.github.elections2021.pipeline.AddTvdIdsToUiks;
+import com.github.elections2021.pipeline.LoadTikChildren;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -11,7 +11,7 @@ public class FileUtils {
     public static File getResourceFile(String resourceFileName) {
         // see https://mkyong.com/java/java-read-a-file-from-resources-folder/
         try {
-            final URL resource = AddTvdIdsToUiks.class
+            final URL resource = LoadTikChildren.class
                 .getClassLoader()
                 .getResource(resourceFileName);
 

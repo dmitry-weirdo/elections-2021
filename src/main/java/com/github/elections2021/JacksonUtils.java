@@ -80,7 +80,8 @@ public class JacksonUtils {
     public static void serialize(File file, Object object) {
         try {
             ObjectMapper mapper = createObjectMapper();
-            mapper.writeValue(file, object);
+
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, object);
         }
         catch (IOException e) {
             String errorMessage = String.format("Error on writing object of class %s to file %s", object.getClass().getName(), file.getPath());

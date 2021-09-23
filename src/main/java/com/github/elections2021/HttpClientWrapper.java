@@ -28,18 +28,27 @@ public class HttpClientWrapper {
     public static final Charset WINDOWS_1251_CHARSET = Charset.forName("Windows-1251"); // no UTF-8, fuck yeah :facepalm:
 
     public static void main(String[] args) throws Exception {
-
         final String url = "http://www.vybory.izbirkom.ru/region/izbirkom?action=tvdTree&tvdchildren=true&vrn=100100225883172&tvd=27820001915986";
 
-        HttpClientWrapper clientWrapper = new HttpClientWrapper();
+        loadChildren(url);
+    }
 
-        try {
-            final String childrenJson = clientWrapper.sendTikGet(url);
+    public static List<TvdChild> loadChildren(String url) {
+        try { // todo: nicer code
+            HttpClientWrapper clientWrapper = new HttpClientWrapper();
 
-            final List<TvdChild> children = JacksonUtils.parseList(childrenJson, TvdChild.class);
-            log.info("Children parsed: \n{}", children.toString());
-        } finally {
-            clientWrapper.close();
+            try {
+                final String childrenJson = clientWrapper.sendTikGet(url);
+
+                final List<TvdChild> children = JacksonUtils.parseList(childrenJson, TvdChild.class);
+                log.info("Total {} children parsed from url {}", children.size(), url);
+
+                return children;
+            } finally {
+                clientWrapper.close();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
