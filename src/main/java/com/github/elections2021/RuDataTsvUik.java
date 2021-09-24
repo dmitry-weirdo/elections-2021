@@ -22,4 +22,9 @@ public class RuDataTsvUik {
 
     private String url;
     private Long tikTvd;
+
+    // added from uik based on TIK children data
+    private Long uikTvd;
+    private String uikUrlFederal;
+    private String uikUrlOneMandate;
 }

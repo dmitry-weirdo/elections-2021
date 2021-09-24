@@ -46,7 +46,7 @@ public class LoadTikChildren {
 
             final List<TvdChild> tikChildren = HttpClientWrapper.loadChildren(loadTikChildrenUrl);
 
-            final String tikChildrenFilePath = childrenRootDir + tikTvd + ".json";
+            final String tikChildrenFilePath = getTikChildrenFilePath(childrenRootDir, tikTvd);
 
             final File tikChildrenFile = new File(tikChildrenFilePath);
             JacksonUtils.serialize(tikChildrenFile, tikChildren);
@@ -57,5 +57,9 @@ public class LoadTikChildren {
 //                return;
 //            }
         }
+    }
+
+    public static String getTikChildrenFilePath(String rootDir, Long tikTvd) {
+        return rootDir + tikTvd + ".json";
     }
 }
