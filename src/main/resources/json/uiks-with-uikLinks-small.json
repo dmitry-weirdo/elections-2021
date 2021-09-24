@@ -1,0 +1,28 @@
+[
+  {
+    "fileName": "Алтайский край – Барнаульский.tsv",
+    "level": "ЦИК России",
+    "reg": "Алтайский край",
+    "oik": "Алтайский край – Барнаульский",
+    "tik": "Алтайская",
+    "uik": "УИК №8000",
+    "url": "http://www.vybory.izbirkom.ru/region/izbirkom?action=show&root=1000058&tvd=22220002523303&vrn=100100225883172&prver=0&pronetvd=null&region=22&sub_region=22",
+    "tikTvd": 22220002523303,
+    "uikTvd": 9229002199809,
+    "uikUrlFederal": "http://www.vybory.izbirkom.ru/region/izbirkom?action=show&root=782000048&tvd=9229002199809&vrn=100100225883172&prver=0&type=242",
+    "uikUrlOneMandate": "http://www.vybory.izbirkom.ru/region/izbirkom?action=show&root=782000048&tvd=9229002199809&vrn=100100225883172&prver=0&type=463"
+  },
+  {
+    "fileName": "Алтайский край – Барнаульский.tsv",
+    "level": "ЦИК России",
+    "reg": "Алтайский край",
+    "oik": "Алтайский край – Барнаульский",
+    "tik": "Алтайская",
+    "uik": "УИК №8001",
+    "url": "http://www.vybory.izbirkom.ru/region/izbirkom?action=show&root=1000058&tvd=22220002523303&vrn=100100225883172&prver=0&pronetvd=null&region=22&sub_region=22",
+    "tikTvd": 22220002523303,
+    "uikTvd": 9229002199810,
+    "uikUrlFederal": "http://www.vybory.izbirkom.ru/region/izbirkom?action=show&root=782000048&tvd=9229002199810&vrn=100100225883172&prver=0&type=242",
+    "uikUrlOneMandate": "http://www.vybory.izbirkom.ru/region/izbirkom?action=show&root=782000048&tvd=9229002199810&vrn=100100225883172&prver=0&type=463"
+  }
+]
